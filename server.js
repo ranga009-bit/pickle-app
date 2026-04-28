@@ -72,7 +72,23 @@ app.get("/orders", async (req, res) => {
   const orders = await Order.find();
   res.json(orders);
 });
+app.delete("/products/:id", async (req, res) => {
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
 
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({
+      success: true,
+      message: "Product deleted",
+      product: deletedProduct
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 // ================= SERVER =================
 
 const PORT = process.env.PORT || 5000;
