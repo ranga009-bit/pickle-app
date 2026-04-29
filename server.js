@@ -2,7 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const User = require("./models/User");
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String
+});
+
+const User = mongoose.model("User", userSchema);
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const app = express();
